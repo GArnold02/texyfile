@@ -1,0 +1,140 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/interface/receive/Receive.gd" type="Script" id=1]
+[ext_resource path="res://scenes/interface/receive/Files.gd" type="Script" id=2]
+[ext_resource path="res://scenes/interface/receive/Confirm.gd" type="Script" id=3]
+
+[node name="Receive" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Main" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 633.0
+margin_bottom = 393.0
+
+[node name="Header" type="Label" parent="Main"]
+margin_right = 626.0
+margin_bottom = 14.0
+text = "Receive from someguy55"
+align = 1
+
+[node name="Status" type="PanelContainer" parent="Main"]
+margin_top = 18.0
+margin_right = 626.0
+margin_bottom = 330.0
+size_flags_vertical = 3
+
+[node name="List" type="VBoxContainer" parent="Main/Status"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 619.0
+margin_bottom = 305.0
+
+[node name="Header" type="Label" parent="Main/Status/List"]
+margin_right = 612.0
+margin_bottom = 14.0
+text = "Status"
+
+[node name="Scroll" type="ScrollContainer" parent="Main/Status/List"]
+margin_top = 18.0
+margin_right = 612.0
+margin_bottom = 298.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="Files" type="VBoxContainer" parent="Main/Status/List/Scroll"]
+margin_right = 612.0
+margin_bottom = 280.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 2 )
+
+[node name="Control" type="PanelContainer" parent="Main"]
+margin_top = 334.0
+margin_right = 626.0
+margin_bottom = 386.0
+
+[node name="List" type="VBoxContainer" parent="Main/Control"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 619.0
+margin_bottom = 45.0
+
+[node name="Header" type="Label" parent="Main/Control/List"]
+margin_right = 612.0
+margin_bottom = 14.0
+text = "Control"
+
+[node name="Buttons" type="HBoxContainer" parent="Main/Control/List"]
+margin_top = 18.0
+margin_right = 612.0
+margin_bottom = 38.0
+
+[node name="Abort" type="Button" parent="Main/Control/List/Buttons"]
+margin_left = 565.0
+margin_right = 612.0
+margin_bottom = 20.0
+size_flags_horizontal = 10
+text = "Abort"
+
+[node name="Confirm" type="CenterContainer" parent="."]
+visible = false
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 221.0
+margin_bottom = 113.0
+script = ExtResource( 3 )
+
+[node name="PanelContainer" type="PanelContainer" parent="Confirm"]
+margin_left = 100.0
+margin_top = 46.0
+margin_right = 114.0
+margin_bottom = 60.0
+
+[node name="List" type="VBoxContainer" parent="Confirm/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 207.0
+margin_bottom = 80.0
+
+[node name="Header" type="Label" parent="Confirm/PanelContainer/List"]
+margin_right = 200.0
+margin_bottom = 14.0
+text = "Receive files?"
+align = 1
+
+[node name="Message" type="Label" parent="Confirm/PanelContainer/List"]
+margin_top = 18.0
+margin_right = 200.0
+margin_bottom = 49.0
+rect_min_size = Vector2( 200, 0 )
+text = "someguy55 wants to send you 5 files. Do you accept?"
+autowrap = true
+
+[node name="Buttons" type="HBoxContainer" parent="Confirm/PanelContainer/List"]
+margin_top = 53.0
+margin_right = 200.0
+margin_bottom = 73.0
+alignment = 1
+
+[node name="Accept" type="Button" parent="Confirm/PanelContainer/List/Buttons"]
+margin_left = 39.0
+margin_right = 95.0
+margin_bottom = 20.0
+text = "Accept"
+
+[node name="Decline" type="Button" parent="Confirm/PanelContainer/List/Buttons"]
+margin_left = 99.0
+margin_right = 160.0
+margin_bottom = 20.0
+text = "Decline"
+[connection signal="pressed" from="Main/Control/List/Buttons/Abort" to="." method="_on_Abort_pressed"]
+[connection signal="pressed" from="Confirm/PanelContainer/List/Buttons/Accept" to="." method="_on_Accept_pressed"]
+[connection signal="pressed" from="Confirm/PanelContainer/List/Buttons/Decline" to="." method="_on_Decline_pressed"]

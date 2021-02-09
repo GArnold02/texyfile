@@ -1,0 +1,87 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/interface/send/Recipients.gd" type="Script" id=1]
+[ext_resource path="res://scenes/interface/send/Send.gd" type="Script" id=2]
+
+[node name="Send" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="List" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 633.0
+margin_bottom = 393.0
+
+[node name="Header" type="Label" parent="List"]
+margin_right = 626.0
+margin_bottom = 14.0
+text = "Sending"
+align = 1
+
+[node name="Status" type="PanelContainer" parent="List"]
+margin_top = 18.0
+margin_right = 626.0
+margin_bottom = 330.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="List" type="VBoxContainer" parent="List/Status"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 619.0
+margin_bottom = 305.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Header" type="Label" parent="List/Status/List"]
+margin_right = 612.0
+margin_bottom = 14.0
+text = "Status"
+
+[node name="Scroll" type="ScrollContainer" parent="List/Status/List"]
+margin_top = 18.0
+margin_right = 612.0
+margin_bottom = 298.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="Recipients" type="VBoxContainer" parent="List/Status/List/Scroll"]
+margin_right = 612.0
+margin_bottom = 280.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+
+[node name="Control" type="PanelContainer" parent="List"]
+margin_top = 334.0
+margin_right = 626.0
+margin_bottom = 386.0
+
+[node name="List" type="VBoxContainer" parent="List/Control"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 619.0
+margin_bottom = 45.0
+
+[node name="Header" type="Label" parent="List/Control/List"]
+margin_right = 612.0
+margin_bottom = 14.0
+text = "Control"
+
+[node name="Buttons" type="HBoxContainer" parent="List/Control/List"]
+margin_top = 18.0
+margin_right = 612.0
+margin_bottom = 38.0
+
+[node name="Abort" type="Button" parent="List/Control/List/Buttons"]
+margin_left = 565.0
+margin_right = 612.0
+margin_bottom = 20.0
+size_flags_horizontal = 10
+text = "Abort"

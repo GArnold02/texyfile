@@ -1,0 +1,128 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://scenes/interface/settings/Settings.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/interface/menu/Menu.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/interface/status_bar/StatusBar.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/interface/peers/Peers.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/logical/peer/Peer.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/interface/host/Host.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/interface/receive/Receive.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/logical/server/Server.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/interface/send/Send.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/main/Jobs.gd" type="Script" id=10]
+
+[node name="Main" type="Node"]
+
+[node name="Server" parent="." instance=ExtResource( 8 )]
+host_path = NodePath("../Interface/Body/Content/Main/Jobs/Host")
+peer_path = NodePath("../Peer")
+
+[node name="Peer" parent="." instance=ExtResource( 5 )]
+server_path = NodePath("../Server")
+jobs_path = NodePath("../Interface/Body/Content/Main/Jobs")
+
+[node name="Interface" type="CanvasLayer" parent="."]
+
+[node name="Body" type="VBoxContainer" parent="Interface"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Content" type="PanelContainer" parent="Interface/Body"]
+margin_right = 640.0
+margin_bottom = 366.0
+size_flags_vertical = 3
+
+[node name="Main" type="HBoxContainer" parent="Interface/Body/Content"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 633.0
+margin_bottom = 359.0
+
+[node name="Settings" parent="Interface/Body/Content/Main" instance=ExtResource( 1 )]
+visible = false
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 250.0
+margin_bottom = 352.0
+download_dir_dialog_path = NodePath("../../../../DownDialog")
+
+[node name="Jobs" type="MarginContainer" parent="Interface/Body/Content/Main"]
+margin_right = 545.0
+margin_bottom = 352.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 10 )
+
+[node name="Host" parent="Interface/Body/Content/Main/Jobs" instance=ExtResource( 6 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 545.0
+margin_bottom = 352.0
+
+[node name="Peers" parent="Interface/Body/Content/Main/Jobs" instance=ExtResource( 4 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 545.0
+margin_bottom = 352.0
+send_dialog_path = NodePath("../../../../../SendDialog")
+
+[node name="Send" parent="Interface/Body/Content/Main/Jobs" instance=ExtResource( 9 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 545.0
+margin_bottom = 352.0
+
+[node name="Receive" parent="Interface/Body/Content/Main/Jobs" instance=ExtResource( 7 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 545.0
+margin_bottom = 352.0
+
+[node name="Menu" parent="Interface/Body/Content/Main" instance=ExtResource( 2 )]
+margin_left = 549.0
+margin_right = 626.0
+margin_bottom = 352.0
+settings_path = NodePath("../Settings")
+jobs_path = NodePath("../Jobs")
+
+[node name="StatusBar" parent="Interface/Body" instance=ExtResource( 3 )]
+margin_top = 370.0
+margin_right = 640.0
+margin_bottom = 400.0
+
+[node name="DownDialog" type="FileDialog" parent="Interface"]
+margin_left = 85.5874
+margin_top = 49.2063
+margin_right = 516.587
+margin_bottom = 349.206
+rect_min_size = Vector2( 200, 300 )
+popup_exclusive = true
+window_title = "Choose Download Directory"
+mode_overrides_title = false
+mode = 2
+access = 2
+current_dir = "/home/arnold/dev/texyfile"
+current_path = "/home/arnold/dev/texyfile/"
+
+[node name="SendDialog" type="FileDialog" parent="Interface"]
+margin_left = 136.587
+margin_top = 49.2063
+margin_right = 466.587
+margin_bottom = 349.206
+rect_min_size = Vector2( 200, 300 )
+popup_exclusive = true
+window_title = "Select file(s)"
+mode_overrides_title = false
+mode = 1
+access = 2
+current_dir = "/home/arnold/dev/texyfile"
+current_path = "/home/arnold/dev/texyfile/"
+[connection signal="host_force_stop" from="Interface/Body/Content/Main/Jobs/Host" to="Server" method="_on_Host_host_force_stop"]
+[connection signal="host_requested" from="Interface/Body/Content/Main/Jobs/Host" to="Server" method="_on_Host_host_requested"]

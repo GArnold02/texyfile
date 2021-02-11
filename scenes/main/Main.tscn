@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scenes/interface/settings/Settings.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/interface/menu/Menu.tscn" type="PackedScene" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://scenes/logical/server/Server.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/interface/send/Send.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/main/Jobs.gd" type="Script" id=10]
+[ext_resource path="res://scenes/main/Sender.gd" type="Script" id=11]
+[ext_resource path="res://scenes/main/Receiver.gd" type="Script" id=12]
 
 [node name="Main" type="Node"]
 
@@ -20,6 +22,12 @@ peer_path = NodePath("../Peer")
 [node name="Peer" parent="." instance=ExtResource( 5 )]
 server_path = NodePath("../Server")
 jobs_path = NodePath("../Interface/Body/Content/Main/Jobs")
+
+[node name="Sender" type="Node" parent="Peer"]
+script = ExtResource( 11 )
+
+[node name="Receiver" type="Node" parent="Peer"]
+script = ExtResource( 12 )
 
 [node name="Interface" type="CanvasLayer" parent="."]
 

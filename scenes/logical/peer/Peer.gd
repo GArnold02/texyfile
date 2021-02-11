@@ -22,6 +22,7 @@ var peer_ids: Dictionary = {
 
 
 func _ready():
+	
 	# warning-ignore:return_value_discarded
 	connect("peer_registered", server, "_on_peer_registered")
 	
@@ -69,6 +70,7 @@ func _on_server_disconnected():
 func _on_sending_begun(targets: PoolStringArray, paths: PoolStringArray):
 	is_sending = true
 	accept_pending = targets
+	$Sender.paths = paths
 	
 	for target in targets:
 		var id: int = peer_ids[target]
@@ -107,7 +109,7 @@ func _get_peer_name(id: int) -> String:
 
 func _check_everyone_accepted():
 	if accept_pending.empty():
-		print("EVERYONE READY!!!")
+		$Sender.begin(accepted)
 
 
 remote func register(name: String):
@@ -148,7 +150,7 @@ remote func accept_send():
 	
 	jobs.get_send().recipient_accepted(who_name)
 	accept_pending.erase(who_name)
-	accepted.push_back(who_name)
+	accepted.push_back(who)
 	
 	_check_everyone_accepted()
 

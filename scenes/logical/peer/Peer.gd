@@ -82,6 +82,7 @@ func _on_sending_begun(targets: PoolStringArray, paths: PoolStringArray):
 
 func _on_receive_accepted():
 	rpc_id(peer_ids[sender_name], "accept_send")
+	$Receiver.file_names = paths_to_names(received_paths)
 	jobs.get_receive().populate_with_files(received_paths)
 
 
@@ -168,3 +169,13 @@ remote func decline_send():
 remote func receiver_aborted_send():
 	var who: int = get_tree().get_rpc_sender_id()
 	jobs.get_send().recipient_aborted(_get_peer_name(who))
+
+
+func paths_to_names(paths: PoolStringArray) -> PoolStringArray:
+	var arr: PoolStringArray = []
+	for path in paths:
+		var unix_path: String = path.replace("\\", "/")
+		var tokens: PoolStringArray = unix_path.split("/")
+		arr.push_back(tokens[tokens.size() - 1])
+	
+	return arr

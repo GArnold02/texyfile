@@ -27,6 +27,7 @@ status_bar_path = NodePath("../Interface/Body/StatusBar")
 
 [node name="Sender" type="Node" parent="Peer"]
 script = ExtResource( 11 )
+jobs_path = NodePath("../../Interface/Body/Content/Main/Jobs")
 
 [node name="Receiver" type="Node" parent="Peer"]
 script = ExtResource( 12 )
@@ -138,6 +139,7 @@ mode = 1
 access = 2
 current_dir = "/home/arnold/dev/texyfile"
 current_path = "/home/arnold/dev/texyfile/"
+[connection signal="send_finished" from="Peer/Sender" to="Peer/Sender" method="_on_send_finished"]
 [connection signal="timeout" from="Peer/RetryTimer" to="Peer" method="_on_RetryTimer_timeout"]
 [connection signal="host_force_stop" from="Interface/Body/Content/Main/Jobs/Host" to="Server" method="_on_Host_host_force_stop"]
 [connection signal="host_requested" from="Interface/Body/Content/Main/Jobs/Host" to="Server" method="_on_Host_host_requested"]

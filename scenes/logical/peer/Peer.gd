@@ -40,6 +40,9 @@ func _ready():
 	# warning-ignore:return_value_discarded
 	jobs.get_receive().connect("user_aborted", self, "_on_receive_aborted")
 	
+	# warning-ignore:return_value_discarded
+	jobs.get_send().connect("user_aborted", self, "_on_send_aborted")
+	
 	_connect_to_server()
 
 
@@ -92,6 +95,12 @@ func _on_receive_aborted():
 	
 	is_receiving = false
 	sender_name = ""
+
+
+func _on_send_aborted():
+	$Sender.abort()
+	jobs.get_send().clear_recipients()
+	is_sending = false
 
 
 func _connect_to_server():

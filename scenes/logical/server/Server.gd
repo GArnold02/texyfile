@@ -14,15 +14,13 @@ var peers: Dictionary = {
 }
 
 
-func _ready():
+func _on_Host_host_requested(port):
 	# warning-ignore:return_value_discarded
 	get_tree().connect("network_peer_connected", self, "_on_peer_connected")
 	
 	# warning-ignore:return_value_discarded
 	get_tree().connect("network_peer_disconnected", self, "_on_peer_disconnected")
-
-
-func _on_Host_host_requested(port):
+	
 	var net: NetworkedMultiplayerENet = NetworkedMultiplayerENet.new()
 	
 	# warning-ignore:return_value_discarded

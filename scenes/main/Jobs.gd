@@ -26,7 +26,9 @@ func pop_current():
 	stack.pop_back()
 	
 	_hide_all()
-	stack.back().show()
+	
+	if not stack.empty():
+		stack.back().show()
 
 
 func get_current()-> String:

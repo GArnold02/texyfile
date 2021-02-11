@@ -17,6 +17,21 @@ func _finish_previous_file():
 		file.close()
 
 
+func _reset():
+	if file != null:
+		file.close()
+		file = null
+	
+	file_names = []
+	current_file_id = 0
+	current_file_size = 0
+	received_bytes = 0
+	
+	get_parent().is_receiving = false
+	jobs.get_receive().clear_files()
+	jobs.pop_current()
+
+
 remote func next_file_info(file_id: int, file_size: int):
 	_finish_previous_file()
 	
@@ -34,6 +49,9 @@ remote func next_file_info(file_id: int, file_size: int):
 
 
 remote func fragment_received(buf: PoolByteArray):
+	if file == null:
+		return
+
 	var sender_id: int = get_tree().get_rpc_sender_id()
 	sender.rpc_id(sender_id, "fragment_confirmed")
 	file.store_buffer(buf)
@@ -49,3 +67,11 @@ remote func fragment_received(buf: PoolByteArray):
 remote func file_arrived(file_id: int):
 	_finish_previous_file()
 	jobs.get_receive().set_file_arrived(file_names[file_id])
+	
+	if file_id == file_names.size() - 1:
+		_reset()
+
+
+remote func sender_aborted():
+	if get_parent().is_receiving:
+		_reset()

@@ -17,6 +17,11 @@ func add_file(file_name: String):
 	status.set_status("waiting")
 
 
+func clear():
+	for child in get_children():
+		child.queue_free()
+
+
 func set_file_progress(file_name: String, progress: float):
 	var status = status_dict[file_name]
 	status.set_progress(progress)

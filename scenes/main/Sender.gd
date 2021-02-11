@@ -5,7 +5,10 @@ signal send_finished
 
 const FRAGMENT_SIZE: int = 8192
 
+export var jobs_path: NodePath
+
 onready var receiver = get_node("../Receiver")
+onready var jobs = get_node(jobs_path)
 
 var paths: PoolStringArray
 var receiver_ids: Array
@@ -18,6 +21,27 @@ var remaining_bytes: int
 var current_fragment: int
 var fragment_count: int
 
+
+func _on_send_finished():
+	get_parent().is_sending = false
+	jobs.get_send().clear_recipients()
+	jobs.pop_current()
+	_reset()
+
+
+func _reset():
+	paths = []
+	receiver_ids.clear()
+	received.clear()
+	current_file_id = 0
+	
+	if current_file != null:
+		current_file.close()
+		current_file = null
+	
+	remaining_bytes = 0
+	current_fragment = 0
+	fragment_count = 0
 
 
 func _get_next_fragment_size() -> int:
@@ -98,3 +122,9 @@ remote func fragment_confirmed():
 				return # Don't send anything if there are no files left
 		
 		send_next_fragment()
+
+
+func abort():
+	for rec in receiver_ids:
+		receiver.rpc_id(rec, "sender_aborted")
+	_reset()

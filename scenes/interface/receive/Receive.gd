@@ -37,6 +37,11 @@ func populate_with_files(paths: PoolStringArray):
 		file_list.add_file(path)
 
 
+func clear_files():
+	var file_list: Control = $Main/Status/List/Scroll/Files
+	file_list.clear()
+
+
 func set_file_progress(file_name: String, progress: float):
 	file_manager.set_file_progress(file_name, progress)
 

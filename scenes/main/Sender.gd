@@ -1,12 +1,15 @@
 extends Node
 
 
+signal send_finished
+
 const FRAGMENT_SIZE: int = 8192
 
 onready var receiver = get_node("../Receiver")
 
 var paths: PoolStringArray
 var receiver_ids: Array
+var received: Array
 
 var current_file_id: int
 var current_file: File = null
@@ -15,7 +18,6 @@ var remaining_bytes: int
 var current_fragment: int
 var fragment_count: int
 
-var received: Array
 
 
 func _get_next_fragment_size() -> int:
@@ -38,15 +40,15 @@ func _set_fragment_count():
 
 # Returns false when there are no more files left to be sent.
 func _begin_next_file() -> bool:
+	if current_file_id > 0:
+		for rec in receiver_ids:
+			receiver.rpc_id(rec, "file_arrived", current_file_id-1)
+	
 	# Check if this was the last file
 	if current_file_id == paths.size():
 		return false
 	
-	
 	if current_file != null:
-		for rec in receiver_ids:
-			receiver.rpc_id(rec, "file_arrived", current_file_id-1)
-		
 		current_file.close()
 	
 	current_file = File.new()
@@ -81,8 +83,6 @@ func send_next_fragment():
 	for rec in receiver_ids:
 		receiver.rpc_id(rec, "fragment_received", buf)
 	
-	print("sent %s/%s: %s" % [current_fragment, fragment_count, buf.size()])
-	
 	current_fragment += 1
 
 
@@ -94,7 +94,7 @@ remote func fragment_confirmed():
 		received.clear()
 		if current_fragment == fragment_count:
 			if not _begin_next_file():
-				print("Finished")
+				emit_signal("send_finished")
 				return # Don't send anything if there are no files left
 		
 		send_next_fragment()

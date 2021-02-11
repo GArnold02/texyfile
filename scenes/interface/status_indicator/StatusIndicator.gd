@@ -16,6 +16,16 @@ const status_dict: Dictionary = {
 		"icon": preload("res://icons/error.png"),
 		"text": "Aborted",
 	},
+	
+	"receiving": {
+		"icon": preload("res://icons/receiving.png"),
+		"text": "Receiving",
+	},
+	
+	"arrived": {
+		"icon": preload("res://icons/ready.png"),
+		"text": "Arrived",
+	}
 }
 
 
@@ -36,3 +46,7 @@ func set_status(status: String):
 	
 	tr_status_icon.texture = info["icon"]
 	label_status.text = info["text"]
+
+
+func set_progress(progress: float):
+	pb_progress.value = progress

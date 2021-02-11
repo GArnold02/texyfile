@@ -16,18 +16,24 @@
 [node name="Main" type="Node"]
 
 [node name="Server" parent="." instance=ExtResource( 8 )]
-host_path = NodePath("../Interface/Body/Content/Main/Jobs/Host")
+jobs_path = NodePath("../Interface/Body/Content/Main/Jobs")
 peer_path = NodePath("../Peer")
+status_bar_path = NodePath("../Interface/Body/StatusBar")
 
 [node name="Peer" parent="." instance=ExtResource( 5 )]
 server_path = NodePath("../Server")
 jobs_path = NodePath("../Interface/Body/Content/Main/Jobs")
+status_bar_path = NodePath("../Interface/Body/StatusBar")
 
 [node name="Sender" type="Node" parent="Peer"]
 script = ExtResource( 11 )
 
 [node name="Receiver" type="Node" parent="Peer"]
 script = ExtResource( 12 )
+jobs_path = NodePath("../../Interface/Body/Content/Main/Jobs")
+
+[node name="RetryTimer" type="Timer" parent="Peer"]
+one_shot = true
 
 [node name="Interface" type="CanvasLayer" parent="."]
 
@@ -132,5 +138,6 @@ mode = 1
 access = 2
 current_dir = "/home/arnold/dev/texyfile"
 current_path = "/home/arnold/dev/texyfile/"
+[connection signal="timeout" from="Peer/RetryTimer" to="Peer" method="_on_RetryTimer_timeout"]
 [connection signal="host_force_stop" from="Interface/Body/Content/Main/Jobs/Host" to="Server" method="_on_Host_host_force_stop"]
 [connection signal="host_requested" from="Interface/Body/Content/Main/Jobs/Host" to="Server" method="_on_Host_host_requested"]

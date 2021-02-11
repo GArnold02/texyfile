@@ -15,3 +15,14 @@ func add_file(file_name: String):
 	add_child(status)
 	
 	status.set_status("waiting")
+
+
+func set_file_progress(file_name: String, progress: float):
+	var status = status_dict[file_name]
+	status.set_progress(progress)
+	status.set_status("receiving")
+
+
+func set_file_arrived(file_name: String):
+	var status = status_dict[file_name]
+	status.set_status("arrived")

@@ -5,6 +5,9 @@ signal user_declined
 signal user_aborted
 
 
+onready var file_manager = $Main/Status/List/Scroll/Files
+
+
 func _on_Abort_pressed():
 	get_parent().pop_current()
 	emit_signal("user_aborted")
@@ -32,3 +35,11 @@ func populate_with_files(paths: PoolStringArray):
 	
 	for path in paths:
 		file_list.add_file(path)
+
+
+func set_file_progress(file_name: String, progress: float):
+	file_manager.set_file_progress(file_name, progress)
+
+
+func set_file_arrived(file_name: String):
+	file_manager.set_file_arrived(file_name)

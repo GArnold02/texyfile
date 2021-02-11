@@ -4,9 +4,11 @@ signal peer_registered(id, name)
 
 export var server_path: NodePath
 export var jobs_path: NodePath
+export var status_bar_path: NodePath
 
 onready var server: Node = get_node(server_path) as Node
 onready var jobs: Control = get_node(jobs_path) as Control
+onready var status_bar: Control = get_node(status_bar_path) as Control
 
 var is_receiving: bool
 var sender_name: String
@@ -38,33 +40,23 @@ func _ready():
 	# warning-ignore:return_value_discarded
 	jobs.get_receive().connect("user_aborted", self, "_on_receive_aborted")
 	
-	var net: NetworkedMultiplayerENet = NetworkedMultiplayerENet.new()
-	
-	# warning-ignore:return_value_discarded
-	net.connect("connection_succeeded", self, "_on_connect_succeeded")
-	
-	# warning-ignore:return_value_discarded
-	net.connect("connection_failed", self, "_on_connect_failed")
-	
-	# warning-ignore:return_value_discarded
-	net.connect("server_disconnected", self, "_on_server_disconnected")
-	
-	# warning-ignore:return_value_discarded
-	net.create_client(Settings.params.hostname, Settings.params.port)
-	get_tree().network_peer = net
-	
+	_connect_to_server()
 
 
 func _on_connect_succeeded():
 	rpc_id(1, "register", Settings.params.nickname)
+	status_bar.set_status("connected")
 
 
 func _on_connect_failed():
 	print("Connection failed")
+	status_bar.set_status("disconnected")
+	$RetryTimer.start()
 
 
 func _on_server_disconnected():
-	print("Server disconnected")
+	status_bar.set_status("disconnected")
+	$RetryTimer.start()
 
 
 func _on_sending_begun(targets: PoolStringArray, paths: PoolStringArray):
@@ -82,8 +74,10 @@ func _on_sending_begun(targets: PoolStringArray, paths: PoolStringArray):
 
 func _on_receive_accepted():
 	rpc_id(peer_ids[sender_name], "accept_send")
-	$Receiver.file_names = paths_to_names(received_paths)
-	jobs.get_receive().populate_with_files(received_paths)
+	
+	var names: PoolStringArray = paths_to_names(received_paths)
+	$Receiver.file_names = names
+	jobs.get_receive().populate_with_files(names)
 
 
 func _on_receive_declined():
@@ -100,12 +94,36 @@ func _on_receive_aborted():
 	sender_name = ""
 
 
+func _connect_to_server():
+	get_tree().network_peer = null
+	
+	var net: NetworkedMultiplayerENet = NetworkedMultiplayerENet.new()
+	
+	# warning-ignore:return_value_discarded
+	net.connect("connection_succeeded", self, "_on_connect_succeeded")
+	
+	# warning-ignore:return_value_discarded
+	net.connect("connection_failed", self, "_on_connect_failed")
+	
+	# warning-ignore:return_value_discarded
+	net.connect("server_disconnected", self, "_on_server_disconnected")
+	
+	# warning-ignore:return_value_discarded
+	net.create_client(Settings.params.hostname, Settings.params.port)
+	get_tree().network_peer = net
+
+
 func _get_peer_name(id: int) -> String:
 	for k in peer_ids:
 		if peer_ids[k] == id:
 			return k
 	
 	return "null"
+
+
+func _on_RetryTimer_timeout():
+	status_bar.set_status("connecting")
+	_connect_to_server()
 
 
 func _check_everyone_accepted():
@@ -169,6 +187,8 @@ remote func decline_send():
 remote func receiver_aborted_send():
 	var who: int = get_tree().get_rpc_sender_id()
 	jobs.get_send().recipient_aborted(_get_peer_name(who))
+	$Sender.receiver_ids.erase(who)
+	$Sender.received.erase(who)
 
 
 func paths_to_names(paths: PoolStringArray) -> PoolStringArray:

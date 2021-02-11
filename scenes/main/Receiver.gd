@@ -17,7 +17,7 @@ func _finish_previous_file():
 		file.close()
 
 
-func _reset():
+func reset():
 	if file != null:
 		file.close()
 		file = null
@@ -69,9 +69,9 @@ remote func file_arrived(file_id: int):
 	jobs.get_receive().set_file_arrived(file_names[file_id])
 	
 	if file_id == file_names.size() - 1:
-		_reset()
+		reset()
 
 
 remote func sender_aborted():
 	if get_parent().is_receiving:
-		_reset()
+		reset()

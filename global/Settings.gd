@@ -32,8 +32,8 @@ func load_settings() -> bool:
 		params = file.get_var()
 		file.close()
 		
-		randomize()
-		params.nickname = "peer%s" % int(rand_range(0, 999))
+#		randomize()
+#		params.nickname = "peer%s" % int(rand_range(0, 999))
 		return true
 	
 	return false

@@ -48,3 +48,12 @@ func set_file_progress(file_name: String, progress: float):
 
 func set_file_arrived(file_name: String):
 	file_manager.set_file_arrived(file_name)
+
+
+func set_sender_name(sender_name: String):
+	$Main/Header.text = "Receive from %s" % sender_name
+
+
+func _on_Receive_visibility_changed():
+	#clear_files()
+	pass

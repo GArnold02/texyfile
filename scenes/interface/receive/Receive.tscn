@@ -135,6 +135,7 @@ margin_left = 99.0
 margin_right = 160.0
 margin_bottom = 20.0
 text = "Decline"
+[connection signal="visibility_changed" from="." to="." method="_on_Receive_visibility_changed"]
 [connection signal="pressed" from="Main/Control/List/Buttons/Abort" to="." method="_on_Abort_pressed"]
 [connection signal="pressed" from="Confirm/PanelContainer/List/Buttons/Accept" to="." method="_on_Accept_pressed"]
 [connection signal="pressed" from="Confirm/PanelContainer/List/Buttons/Decline" to="." method="_on_Decline_pressed"]

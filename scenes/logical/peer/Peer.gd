@@ -92,6 +92,7 @@ func _on_receive_declined():
 
 func _on_receive_aborted():
 	rpc_id(peer_ids[sender_name], "receiver_aborted_send")
+	$Receiver.reset()
 	
 	is_receiving = false
 	sender_name = ""
@@ -169,6 +170,7 @@ remote func ask_send(sender: String, paths: PoolStringArray):
 	received_paths = paths
 	
 	jobs.get_receive().ask_for_confirmation(sender, paths.size())
+	jobs.get_receive().set_sender_name(sender)
 	jobs.push_current("Receive")
 
 

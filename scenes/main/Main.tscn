@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scenes/interface/settings/Settings.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/interface/menu/Menu.tscn" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://scenes/main/Jobs.gd" type="Script" id=10]
 [ext_resource path="res://scenes/main/Sender.gd" type="Script" id=11]
 [ext_resource path="res://scenes/main/Receiver.gd" type="Script" id=12]
+[ext_resource path="res://theme.tres" type="Theme" id=13]
 
 [node name="Main" type="Node"]
 
@@ -34,6 +35,7 @@ script = ExtResource( 12 )
 jobs_path = NodePath("../../Interface/Body/Content/Main/Jobs")
 
 [node name="RetryTimer" type="Timer" parent="Peer"]
+wait_time = 2.0
 one_shot = true
 
 [node name="Interface" type="CanvasLayer" parent="."]
@@ -41,20 +43,22 @@ one_shot = true
 [node name="Body" type="VBoxContainer" parent="Interface"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 13 )
+custom_constants/separation = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Content" type="PanelContainer" parent="Interface/Body"]
 margin_right = 640.0
-margin_bottom = 366.0
+margin_bottom = 373.0
 size_flags_vertical = 3
 
 [node name="Main" type="HBoxContainer" parent="Interface/Body/Content"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 633.0
-margin_bottom = 359.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 635.0
+margin_bottom = 368.0
 
 [node name="Settings" parent="Interface/Body/Content/Main" instance=ExtResource( 1 )]
 visible = false
@@ -62,11 +66,12 @@ margin_left = 0.0
 margin_top = 0.0
 margin_right = 250.0
 margin_bottom = 352.0
+theme = ExtResource( 13 )
 download_dir_dialog_path = NodePath("../../../../DownDialog")
 
 [node name="Jobs" type="MarginContainer" parent="Interface/Body/Content/Main"]
-margin_right = 545.0
-margin_bottom = 352.0
+margin_right = 543.0
+margin_bottom = 363.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 10 )
@@ -75,49 +80,56 @@ script = ExtResource( 10 )
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 545.0
-margin_bottom = 352.0
+margin_right = 543.0
+margin_bottom = 363.0
 
 [node name="Peers" parent="Interface/Body/Content/Main/Jobs" instance=ExtResource( 4 )]
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 545.0
-margin_bottom = 352.0
+margin_right = 543.0
+margin_bottom = 363.0
+theme = ExtResource( 13 )
 send_dialog_path = NodePath("../../../../../SendDialog")
 
 [node name="Send" parent="Interface/Body/Content/Main/Jobs" instance=ExtResource( 9 )]
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 545.0
-margin_bottom = 352.0
+margin_right = 543.0
+margin_bottom = 363.0
+theme = ExtResource( 13 )
 
 [node name="Receive" parent="Interface/Body/Content/Main/Jobs" instance=ExtResource( 7 )]
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 545.0
-margin_bottom = 352.0
+margin_right = 543.0
+margin_bottom = 363.0
+theme = ExtResource( 13 )
 
 [node name="Menu" parent="Interface/Body/Content/Main" instance=ExtResource( 2 )]
-margin_left = 549.0
-margin_right = 626.0
-margin_bottom = 352.0
+margin_left = 547.0
+margin_right = 630.0
+margin_bottom = 363.0
+theme = ExtResource( 13 )
 settings_path = NodePath("../Settings")
 jobs_path = NodePath("../Jobs")
 
 [node name="StatusBar" parent="Interface/Body" instance=ExtResource( 3 )]
-margin_top = 370.0
+margin_top = 373.0
 margin_right = 640.0
 margin_bottom = 400.0
+theme = ExtResource( 13 )
 
 [node name="DownDialog" type="FileDialog" parent="Interface"]
+visible = true
 margin_left = 85.5874
 margin_top = 49.2063
 margin_right = 516.587
 margin_bottom = 349.206
-rect_min_size = Vector2( 200, 300 )
+rect_min_size = Vector2( 580, 300 )
+theme = ExtResource( 13 )
 popup_exclusive = true
 window_title = "Choose Download Directory"
 mode_overrides_title = false
@@ -125,13 +137,17 @@ mode = 2
 access = 2
 current_dir = "/home/arnold/dev/texyfile"
 current_path = "/home/arnold/dev/texyfile/"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="SendDialog" type="FileDialog" parent="Interface"]
 margin_left = 136.587
 margin_top = 49.2063
 margin_right = 466.587
 margin_bottom = 349.206
-rect_min_size = Vector2( 200, 300 )
+rect_min_size = Vector2( 580, 300 )
+theme = ExtResource( 13 )
 popup_exclusive = true
 window_title = "Select file(s)"
 mode_overrides_title = false

@@ -1,123 +1,127 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scenes/interface/host/Host.gd" type="Script" id=1]
+[ext_resource path="res://theme.tres" type="Theme" id=2]
 
 [node name="Host" type="PanelContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 2 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Body" type="VBoxContainer" parent="."]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 633.0
-margin_bottom = 393.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 635.0
+margin_bottom = 395.0
 
 [node name="Header" type="Label" parent="Body"]
-margin_right = 626.0
-margin_bottom = 14.0
+margin_right = 630.0
+margin_bottom = 17.0
 size_flags_vertical = 0
 text = "Host"
 align = 1
 
 [node name="List" type="HBoxContainer" parent="Body"]
-margin_top = 18.0
-margin_right = 626.0
-margin_bottom = 386.0
+margin_top = 21.0
+margin_right = 630.0
+margin_bottom = 390.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Control" type="PanelContainer" parent="Body/List"]
-margin_right = 117.0
-margin_bottom = 368.0
+margin_right = 125.0
+margin_bottom = 369.0
 
 [node name="List" type="VBoxContainer" parent="Body/List/Control"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 110.0
-margin_bottom = 361.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 120.0
+margin_bottom = 364.0
 
 [node name="Header" type="Label" parent="Body/List/Control/List"]
-margin_right = 103.0
-margin_bottom = 14.0
+margin_right = 115.0
+margin_bottom = 17.0
 text = "Control"
 
 [node name="Port" type="HBoxContainer" parent="Body/List/Control/List"]
-margin_top = 18.0
-margin_right = 103.0
-margin_bottom = 42.0
+margin_top = 21.0
+margin_right = 115.0
+margin_bottom = 48.0
 
 [node name="Label" type="Label" parent="Body/List/Control/List/Port"]
 margin_top = 5.0
-margin_right = 34.0
-margin_bottom = 19.0
+margin_right = 41.0
+margin_bottom = 22.0
 text = "Port: "
 
 [node name="Value" type="LineEdit" parent="Body/List/Control/List/Port"]
-margin_left = 38.0
-margin_right = 103.0
-margin_bottom = 24.0
+margin_left = 45.0
+margin_right = 115.0
+margin_bottom = 27.0
 size_flags_horizontal = 3
 
 [node name="Start" type="Button" parent="Body/List/Control/List"]
-margin_top = 46.0
-margin_right = 103.0
-margin_bottom = 66.0
+margin_top = 52.0
+margin_right = 115.0
+margin_bottom = 79.0
 disabled = true
 text = "Start"
 
 [node name="Stop" type="Button" parent="Body/List/Control/List"]
-margin_top = 70.0
-margin_right = 103.0
-margin_bottom = 90.0
+margin_top = 83.0
+margin_right = 115.0
+margin_bottom = 110.0
 disabled = true
 text = "Stop"
 
 [node name="Separator" type="HSeparator" parent="Body/List/Control/List"]
-margin_top = 332.0
-margin_right = 103.0
-margin_bottom = 336.0
+visible = false
+margin_top = 355.0
+margin_right = 115.0
+margin_bottom = 359.0
 size_flags_vertical = 10
 
 [node name="Status" type="HBoxContainer" parent="Body/List/Control/List"]
-margin_top = 340.0
-margin_right = 103.0
-margin_bottom = 354.0
+visible = false
+margin_top = 342.0
+margin_right = 127.0
+margin_bottom = 359.0
 
 [node name="Label" type="Label" parent="Body/List/Control/List/Status"]
-margin_right = 47.0
-margin_bottom = 14.0
+margin_right = 57.0
+margin_bottom = 17.0
 text = "Status: "
 
 [node name="Value" type="Label" parent="Body/List/Control/List/Status"]
-margin_left = 51.0
-margin_right = 103.0
-margin_bottom = 14.0
+margin_left = 61.0
+margin_right = 127.0
+margin_bottom = 17.0
 text = "Stopped"
 
 [node name="Log" type="PanelContainer" parent="Body/List"]
-margin_left = 121.0
-margin_right = 626.0
-margin_bottom = 368.0
+margin_left = 129.0
+margin_right = 630.0
+margin_bottom = 369.0
 size_flags_horizontal = 3
 
 [node name="List" type="VBoxContainer" parent="Body/List/Log"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 498.0
-margin_bottom = 361.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 496.0
+margin_bottom = 364.0
 
 [node name="Header" type="Label" parent="Body/List/Log/List"]
 margin_right = 491.0
-margin_bottom = 14.0
+margin_bottom = 17.0
 text = "Log"
 
 [node name="Text" type="TextEdit" parent="Body/List/Log/List"]
-margin_top = 18.0
+margin_top = 21.0
 margin_right = 491.0
-margin_bottom = 354.0
+margin_bottom = 359.0
 size_flags_vertical = 3
 readonly = true

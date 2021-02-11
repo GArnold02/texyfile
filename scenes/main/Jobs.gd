@@ -29,6 +29,9 @@ func pop_current():
 	
 	if not stack.empty():
 		stack.back().show()
+	else:
+		# Quick fix because I'm lazy :P
+		push_current("Peers")
 
 
 func get_current()-> String:

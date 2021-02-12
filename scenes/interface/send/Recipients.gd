@@ -15,4 +15,5 @@ func add_recipient(rec_name: String):
 
 
 func set_recipient_status(rec_name: String, status: String):
-	rec_status[rec_name].set_status(status)
+	if rec_status.has(rec_name):
+		rec_status[rec_name].set_status(status)

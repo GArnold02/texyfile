@@ -34,7 +34,7 @@ func pop_current():
 		push_current("Peers")
 
 
-func get_current()-> String:
+func get_current() -> String:
 	return stack.back().name
 
 

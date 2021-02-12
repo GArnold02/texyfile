@@ -24,16 +24,15 @@ func save_settings():
 	file.close()
 
 
-func load_settings() -> bool:
+func load_settings():
 	var file: File = File.new()
 	if file.file_exists(PATH):
 		# warning-ignore:return_value_discarded
 		file.open(PATH, File.READ)
 		params = file.get_var()
 		file.close()
-		
-#		randomize()
-#		params.nickname = "peer%s" % int(rand_range(0, 999))
-		return true
-	
-	return false
+	else:
+		params.hostname = "127.0.0.1"
+		params.port = 5555
+		params.nickname = "newbie"
+		params.download_dir = "."

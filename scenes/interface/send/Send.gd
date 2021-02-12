@@ -24,6 +24,24 @@ func recipient_aborted(rec_name: String):
 	recipient_list.set_recipient_status(rec_name, "aborted")
 
 
+func set_file(file_name: String, id: int, count: int):
+	var label_name: Label = $List/Progress/List/File/Name
+	var label_count: Label = $List/Progress/List/File/Count
+	label_name.text = file_name
+	label_count.text = "%s/%s" % [id+1, count]
+
+
+func set_progress(progress: float):
+	var bar: ProgressBar = $List/Progress/List/Bar
+	bar.value = progress
+
+
 func _on_Abort_pressed():
 	get_parent().pop_current()
 	emit_signal("user_aborted")
+
+
+func _on_visibility_changed():
+	if visible:
+		set_progress(0)
+		set_file("", 0, 1)

@@ -36,9 +36,13 @@ onready var pb_progress: ProgressBar = $Elements/Progress
 onready var tr_status_icon: TextureRect = $Elements/StatusIcon
 onready var label_status: Label = $Elements/Status
 
+var has_progress_bar: bool = true
+
 
 func _ready():
 	label_name.text = label
+	if not has_progress_bar:
+		pb_progress.hide()
 
 
 func set_status(status: String):

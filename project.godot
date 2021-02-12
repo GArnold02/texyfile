@@ -18,7 +18,10 @@ _global_script_class_icons={
 config/name="Texyfile"
 config/description="File sharing service"
 run/main_scene="res://scenes/main/Main.tscn"
-config/icon="res://icon.png"
+boot_splash/image="res://texyfore.png"
+boot_splash/fullsize=false
+boot_splash/bg_color=Color( 0.152941, 0.141176, 0.129412, 1 )
+config/icon="res://icons/send.png"
 
 [autoload]
 

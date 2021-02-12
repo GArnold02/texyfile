@@ -60,3 +60,7 @@ func remove_peer(name: String):
 		if item_list.get_item_text(i) == name:
 			item_list.remove_item(i)
 			break
+
+
+func clear():
+	item_list.clear()

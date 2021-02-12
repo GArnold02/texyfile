@@ -5,10 +5,12 @@ signal peer_registered(id, name)
 export var server_path: NodePath
 export var jobs_path: NodePath
 export var status_bar_path: NodePath
+export var settings_path: NodePath
 
 onready var server: Node = get_node(server_path) as Node
 onready var jobs: Control = get_node(jobs_path) as Control
 onready var status_bar: Control = get_node(status_bar_path) as Control
+onready var settings: Control = get_node(settings_path) as Control
 
 var is_receiving: bool
 var sender_name: String
@@ -27,6 +29,12 @@ func _ready():
 	
 	# warning-ignore:return_value_discarded
 	connect("peer_registered", server, "_on_peer_registered")
+	
+	# warning-ignore:return_value_discarded
+	settings.connect("setting_changed", self, "force_disconnect")
+	
+	# warning-ignore:return_value_discarded
+	settings.connect("saved", self, "force_reconnect")
 	
 	# warning-ignore:return_value_discarded
 	jobs.get_peers().connect("sending_begun", self, "_on_sending_begun")
@@ -49,10 +57,11 @@ func _ready():
 func _on_connect_succeeded():
 	rpc_id(1, "register", Settings.params.nickname)
 	status_bar.set_status("connected")
+	
+	OS.set_window_title("Texyfile - %s" % Settings.params.nickname)
 
 
 func _on_connect_failed():
-	print("Connection failed")
 	status_bar.set_status("disconnected")
 	$RetryTimer.start()
 
@@ -210,3 +219,17 @@ func paths_to_names(paths: PoolStringArray) -> PoolStringArray:
 		arr.push_back(tokens[tokens.size() - 1])
 	
 	return arr
+
+
+func force_disconnect():
+	$RetryTimer.stop()
+	jobs.get_peers().clear()
+	if get_tree().network_peer != null and not get_tree().is_network_server():
+		get_tree().network_peer = null
+		status_bar.call_deferred("set_status", "disconnected")
+
+
+func force_reconnect():
+	$RetryTimer.stop()
+	jobs.get_peers().clear()
+	call_deferred("_on_connect_failed")

@@ -25,6 +25,7 @@ status_bar_path = NodePath("../Interface/Body/StatusBar")
 server_path = NodePath("../Server")
 jobs_path = NodePath("../Interface/Body/Content/Main/Jobs")
 status_bar_path = NodePath("../Interface/Body/StatusBar")
+settings_path = NodePath("../Interface/Body/Content/Main/Settings")
 
 [node name="Sender" type="Node" parent="Peer"]
 script = ExtResource( 11 )
@@ -98,7 +99,6 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 543.0
 margin_bottom = 363.0
-theme = ExtResource( 13 )
 
 [node name="Receive" parent="Interface/Body/Content/Main/Jobs" instance=ExtResource( 7 )]
 visible = false
@@ -123,7 +123,6 @@ margin_bottom = 400.0
 theme = ExtResource( 13 )
 
 [node name="DownDialog" type="FileDialog" parent="Interface"]
-visible = true
 margin_left = 85.5874
 margin_top = 49.2063
 margin_right = 516.587

@@ -3,7 +3,6 @@
 [ext_resource path="res://scenes/interface/settings/Settings.gd" type="Script" id=1]
 [ext_resource path="res://icons/dir.png" type="Texture" id=2]
 
-
 [node name="Settings" type="PanelContainer"]
 margin_left = 175.0
 margin_top = 72.0
@@ -155,6 +154,7 @@ margin_top = 222.0
 margin_right = 138.0
 margin_bottom = 242.0
 size_flags_horizontal = 4
+disabled = true
 text = "Save"
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="text_changed" from="Body/Content/List/Server/Body/Paramaters/Hostname" to="." method="_on_Hostname_text_changed"]

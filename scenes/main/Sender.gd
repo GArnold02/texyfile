@@ -86,6 +86,12 @@ func _begin_next_file() -> bool:
 	for rec in receiver_ids:
 		receiver.rpc_id(rec, "next_file_info", current_file_id, remaining_bytes)
 	
+	var unix_path: String = paths[current_file_id].replace("\\", "/")
+	var tokens: PoolStringArray = unix_path.split("/")
+	var file_name = tokens[tokens.size() - 1]
+	
+	jobs.get_send().set_file(file_name, current_file_id, paths.size())
+	
 	current_fragment = 0
 	current_file_id += 1
 	
@@ -106,6 +112,8 @@ func send_next_fragment():
 	
 	for rec in receiver_ids:
 		receiver.rpc_id(rec, "fragment_received", buf)
+	
+	jobs.get_send().set_progress(current_fragment / float(fragment_count))
 	
 	current_fragment += 1
 

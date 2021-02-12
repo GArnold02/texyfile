@@ -10,6 +10,7 @@ func add_recipient(rec_name: String):
 	indicator.label = rec_name
 	
 	rec_status[rec_name] = indicator
+	indicator.has_progress_bar = false
 	add_child(indicator)
 
 

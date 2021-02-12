@@ -1,6 +1,9 @@
 extends PanelContainer
 
 
+signal setting_changed
+signal saved
+
 export var download_dir_dialog_path: NodePath
 
 onready var download_dir_dialog: FileDialog = get_node(
@@ -12,9 +15,6 @@ func _ready():
 	download_dir_dialog.connect(
 		"dir_selected", self, "_on_download_dir_selected"
 	)
-	
-	load_settings()
-	_check_validity()
 
 
 func _check_validity():
@@ -25,6 +25,7 @@ func _check_validity():
 		not Settings.params.download_dir.empty()
 	):
 		$Body/Save.disabled = false
+		emit_signal("setting_changed")
 	else:
 		$Body/Save.disabled = true
 
@@ -32,8 +33,6 @@ func _check_validity():
 func _on_visibility_changed():
 	if visible:
 		load_settings()
-	
-	_check_validity()
 
 
 func _on_Hostname_text_changed(new_text: String):
@@ -57,6 +56,7 @@ func _on_ChooseDir_pressed():
 
 func _on_Save_pressed():
 	Settings.save_settings()
+	emit_signal("saved")
 
 
 func _on_download_dir_selected(dir: String):
@@ -66,8 +66,8 @@ func _on_download_dir_selected(dir: String):
 
 
 func load_settings():
-	if Settings.load_settings():
-		$Body/Content/List/Server/Body/Paramaters/Hostname.text = Settings.params.hostname
-		$Body/Content/List/Server/Body/Paramaters/Port.text = String(Settings.params.port)
-		$Body/Content/List/Nickname/Body/Nickname.text = Settings.params.nickname
-		$Body/Content/List/DownloadDir/Body/Parameters/Directory.text = Settings.params.download_dir
+	Settings.load_settings()
+	$Body/Content/List/Server/Body/Paramaters/Hostname.text = Settings.params.hostname
+	$Body/Content/List/Server/Body/Paramaters/Port.text = String(Settings.params.port)
+	$Body/Content/List/Nickname/Body/Nickname.text = Settings.params.nickname
+	$Body/Content/List/DownloadDir/Body/Parameters/Directory.text = Settings.params.download_dir

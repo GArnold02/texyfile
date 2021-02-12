@@ -16,14 +16,14 @@
 [sub_resource type="StyleBoxLine" id=1]
 color = Color( 0.466667, 0.45098, 0.439216, 1 )
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=2]
 content_margin_left = 5.0
 content_margin_right = 5.0
 content_margin_top = 5.0
 content_margin_bottom = 5.0
 bg_color = Color( 0.105882, 0.266667, 0.188235, 1 )
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=3]
 draw_center = false
 border_width_right = 1
 border_color = Color( 0.466667, 0.45098, 0.439216, 1 )
@@ -268,7 +268,7 @@ ProgressBar/colors/font_color = Color( 0.807843, 0.776471, 0.74902, 1 )
 ProgressBar/colors/font_color_shadow = Color( 0, 0, 0, 0 )
 ProgressBar/fonts/font = null
 ProgressBar/styles/bg = ExtResource( 8 )
-ProgressBar/styles/fg = SubResource( 3 )
+ProgressBar/styles/fg = SubResource( 2 )
 RichTextLabel/colors/default_color = Color( 0, 0, 0, 1 )
 RichTextLabel/colors/font_color_selected = Color( 0, 0, 0, 1 )
 RichTextLabel/colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -429,7 +429,7 @@ VScrollBar/styles/grabber_pressed = ExtResource( 5 )
 VScrollBar/styles/scroll = ExtResource( 8 )
 VScrollBar/styles/scroll_focus = ExtResource( 6 )
 VSeparator/constants/separation = 4
-VSeparator/styles/separator = SubResource( 2 )
+VSeparator/styles/separator = SubResource( 3 )
 VSlider/icons/grabber = null
 VSlider/icons/grabber_disabled = null
 VSlider/icons/grabber_highlight = null
